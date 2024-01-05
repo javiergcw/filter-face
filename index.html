@@ -3,9 +3,6 @@
 <head>
   <script async src="https://unpkg.com/es-module-shims@1.7.2/dist/es-module-shims.js"></script>
   <script type="importmap">
-
-
-
     {
       "imports": {
 	"three": "https://unpkg.com/three@0.153.0/build/three.module.js",
@@ -67,6 +64,8 @@
         renderer.render(scene, camera);
       });
     }
+
+    start();
     const startButton = document.querySelector("#startButton");
     startButton.addEventListener("click", () => {
       start();
@@ -99,8 +98,8 @@
 
 <body>
   <div id="control">
-    <button id="startButton">Start</button>
-    <button id="stopButton">Stop</button>
+    <!-- <button id="startButton">Start</button>
+    <button id="stopButton">Stop</button> -->
   </div>
   <div id="container">
   </div>
