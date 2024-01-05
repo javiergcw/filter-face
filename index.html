@@ -1,16 +1,10 @@
 <html>
-  <head>
-    <script async src="https://unpkg.com/es-module-shims@1.7.2/dist/es-module-shims.js"></script>
-    <script type="importmap">
 
-  const start = async() => {
-    await mindarThree.start();
-    renderer.setAnimationLoop(() => {
-      renderer.render(scene, camera);
-    });
-  }
+<head>
+  <script async src="https://unpkg.com/es-module-shims@1.7.2/dist/es-module-shims.js"></script>
+  <script type="importmap">
 
-  start();
+
 
     {
       "imports": {
@@ -21,91 +15,102 @@
       }
     }
     </script>
-    <script type="module">
-      import * as THREE from 'three';
-      import { MindARThree } from 'mindar-face-three';
-      import { GLTFLoader } from './scripts/GLTFLoader.js';
-
-      const mindarThree = new MindARThree({
-	container: document.querySelector("#container"),
+  <script type="module">
+    import * as THREE from 'three';
+    import { MindARThree } from 'mindar-face-three';
+    import { GLTFLoader } from './scripts/GLTFLoader.js';
+    const startt = async () => {
+      await mindarThree.start();
+      renderer.setAnimationLoop(() => {
+        renderer.render(scene, camera);
       });
-      const {renderer, scene, camera} = mindarThree;
-      // Instantiate a loader
-const loader = new GLTFLoader();
-const skyColor = 0xB1E1FF;  // light blue
-const groundColor = 0xB97A20;  // brownish orange
-const light = new THREE.HemisphereLight(skyColor, groundColor, 1);
-scene.add(light);
+    }
 
-// Load glasses
-/* const glassesAnchor = mindarThree.addAnchor(6);
-loader.load(
-  'https://sasiteit.blob.core.windows.net/container-unity/FaceFilterTest/models/headOccluder.glb',
-  function ( gltf ) {
-    glassesAnchor.group.add( gltf.scene );
-  },
-  function ( xhr ) {
-    console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
-  },
-  function ( error ) {
-    console.log( 'An error happened' );
-  }
-); */
+    startt();
+    const mindarThree = new MindARThree({
+      container: document.querySelector("#container"),
+    });
+    const { renderer, scene, camera } = mindarThree;
+    // Instantiate a loader
+    const loader = new GLTFLoader();
+    const skyColor = 0xB1E1FF;  // light blue
+    const groundColor = 0xB97A20;  // brownish orange
+    const light = new THREE.HemisphereLight(skyColor, groundColor, 1);
+    scene.add(light);
 
-// Load mustache
-const mustacheAnchor = mindarThree.addAnchor(164);
-loader.load(
-  'https://sasiteit.blob.core.windows.net/container-unity/FaceFilterTest/models/mustache.glb',
-  function ( gltf ) {
-    mustacheAnchor.group.add( gltf.scene );
-  },
-  function ( xhr ) {
-    console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
-  },
-  function ( error ) {
-    console.log( 'An error happened' );
-  }
-);
-      
-      const start = async() => {
-	await mindarThree.start();
-	renderer.setAnimationLoop(() => {
-	  renderer.render(scene, camera);
-	});
+    // Load glasses
+    /* const glassesAnchor = mindarThree.addAnchor(6);
+    loader.load(
+      'https://sasiteit.blob.core.windows.net/container-unity/FaceFilterTest/models/headOccluder.glb',
+      function ( gltf ) {
+        glassesAnchor.group.add( gltf.scene );
+      },
+      function ( xhr ) {
+        console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
+      },
+      function ( error ) {
+        console.log( 'An error happened' );
       }
-      const startButton = document.querySelector("#startButton");
-      startButton.addEventListener("click", () => {
-	start();
+    ); */
+
+    // Load mustache
+    const mustacheAnchor = mindarThree.addAnchor(164);
+    loader.load(
+      'https://sasiteit.blob.core.windows.net/container-unity/FaceFilterTest/models/mustache.glb',
+      function (gltf) {
+        mustacheAnchor.group.add(gltf.scene);
+      },
+      function (xhr) {
+        console.log((xhr.loaded / xhr.total * 100) + '% loaded');
+      },
+      function (error) {
+        console.log('An error happened');
+      }
+    );
+
+    const start = async () => {
+      await mindarThree.start();
+      renderer.setAnimationLoop(() => {
+        renderer.render(scene, camera);
       });
-      stopButton.addEventListener("click", () => {
-	mindarThree.stop();
-	mindarThree.renderer.setAnimationLoop(null);
-      });
-    </script>
-    <style>
-      body {
-	margin: 0;
-      }
-      #container {
-	width: 100vw;
-	height: 100vh;
-	position: relative;
-	overflow: hidden;
-      }
-      #control {
-	position: fixed;
-	top: 0;
-	left: 0;
-	z-index: 2;
-      }
-    </style>
-  </head>
-  <body>
-    <div id="control">
-      <button id="startButton">Start</button>
-      <button id="stopButton">Stop</button>
-    </div>
-    <div id="container">
-    </div>
-  </body>
+    }
+    const startButton = document.querySelector("#startButton");
+    startButton.addEventListener("click", () => {
+      start();
+    });
+    stopButton.addEventListener("click", () => {
+      mindarThree.stop();
+      mindarThree.renderer.setAnimationLoop(null);
+    });
+  </script>
+  <style>
+    body {
+      margin: 0;
+    }
+
+    #container {
+      width: 100vw;
+      height: 100vh;
+      position: relative;
+      overflow: hidden;
+    }
+
+    #control {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 2;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="control">
+    <button id="startButton">Start</button>
+    <button id="stopButton">Stop</button>
+  </div>
+  <div id="container">
+  </div>
+</body>
+
 </html>
