@@ -28,27 +28,42 @@
     const light = new THREE.HemisphereLight(skyColor, groundColor, 1);
     scene.add(light);
 
-    // Load glasses
-    /* const glassesAnchor = mindarThree.addAnchor(6);
-    loader.load(
-      'https://sasiteit.blob.core.windows.net/container-unity/FaceFilterTest/models/headOccluder.glb',
-      function ( gltf ) {
-        glassesAnchor.group.add( gltf.scene );
-      },
-      function ( xhr ) {
-        console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
-      },
-      function ( error ) {
-        console.log( 'An error happened' );
-      }
-    ); */
-
     // Load mustache
-    const mustacheAnchor = mindarThree.addAnchor(164);
+    let mixer;
+    const mustacheAnchor = mindarThree.addAnchor(1);
     loader.load(
-      'https://sasiteit.blob.core.windows.net/container-unity/FaceFilterTest/models/mustache.glb',
+      'models/mascaraEPI.glb',
       function (gltf) {
-        mustacheAnchor.group.add(gltf.scene);
+        var animation = gltf.animations[0];
+        gltf.scene.traverse( function ( child ) {
+          if ( child.isMesh ) { 
+            child.material.side = THREE.FrontSide;
+          }
+        }  );
+       mustacheAnchor.group.add(gltf.scene);
+
+    // Create an AnimationMixer instance
+    var mixer = new THREE.AnimationMixer(gltf.scene);
+
+    // Create an AnimationAction instance
+    var action = mixer.clipAction(animation);
+
+    // Play the animation
+    action.play();
+
+    // Render the scene every frame
+    var clock = new THREE.Clock();
+    
+    function animate() {
+      requestAnimationFrame(animate);
+
+      // Update the mixer with the time delta
+      mixer.update(clock.getDelta());
+
+      //renderer.render(scene, camera);
+    }
+
+    animate();
       },
       function (xhr) {
         console.log((xhr.loaded / xhr.total * 100) + '% loaded');
@@ -72,7 +87,8 @@
     });
     stopButton.addEventListener("click", () => {
       mindarThree.stop();
-      mindarThree.renderer.setAnimationLoop(null);
+      mindarThree.renderer.setAnimationLoop(function () {
+      });
     });
   </script>
   <style>
@@ -85,6 +101,7 @@
       height: 100vh;
       position: relative;
       overflow: hidden;
+
     }
 
     #control {
@@ -98,8 +115,8 @@
 
 <body>
   <div id="control">
-    <!-- <button id="startButton">Start</button>
-    <button id="stopButton">Stop</button> -->
+    <button id="startButton">Start</button>
+    <button id="stopButton">Stop</button>
   </div>
   <div id="container">
   </div>
